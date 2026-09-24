@@ -18,9 +18,9 @@ export default function RootLayout({
       <body className="bg-gray-100">
         <Sidebar />
 
-        <div className="min-h-screen lg:pl-64">
-          {children}
-        </div>
+        <div className="min-h-screen pt-16 lg:pt-0 lg:pl-64">
+  {children}
+</div>
       </body>
     </html>
   );

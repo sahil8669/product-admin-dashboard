@@ -32,9 +32,6 @@ export default function AddProductPage() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  /*
-   * Load Categories
-   */
   useEffect(() => {
     const loadCategories = async () => {
       try {
@@ -54,9 +51,6 @@ export default function AddProductPage() {
     loadCategories();
   }, []);
 
-  /*
-   * Handle Input Change
-   */
   const handleChange = (
     event: ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -75,9 +69,6 @@ export default function AddProductPage() {
     }));
   };
 
-  /*
-   * Submit Form
-   */
   const handleSubmit = async (
     event: FormEvent<HTMLFormElement>
   ) => {
@@ -86,9 +77,6 @@ export default function AddProductPage() {
     setError("");
     setSuccess("");
 
-    /*
-     * Validation
-     */
     if (!formData.title.trim()) {
       setError("Product title is required.");
       return;
@@ -124,9 +112,6 @@ export default function AddProductPage() {
       return;
     }
 
-    /*
-     * Create Product
-     */
     try {
       setLoading(true);
 
@@ -138,9 +123,6 @@ export default function AddProductPage() {
         `Product "${createdProduct.title}" added successfully.`
       );
 
-      /*
-       * Reset Form
-       */
       setFormData({
         title: "",
         description: "",
@@ -161,17 +143,50 @@ export default function AddProductPage() {
     }
   };
 
-  /*
-   * Loading State
-   */
   if (categoriesLoading) {
     return (
-      <main className="min-h-screen bg-gray-100 p-6">
-        <div className="mx-auto max-w-4xl">
-          <div className="rounded-xl bg-white p-10 text-center shadow-sm">
-            <p className="text-gray-600">
-              Loading form...
-            </p>
+      <main className="min-h-screen bg-gray-100 p-4 sm:p-6">
+        <div className="mx-auto max-w-5xl">
+
+          {/* Header Skeleton */}
+          <div className="mb-8 flex items-center justify-between">
+            <div>
+              <div className="h-8 w-52 animate-pulse rounded-lg bg-gray-200" />
+              <div className="mt-3 h-4 w-72 animate-pulse rounded bg-gray-200" />
+            </div>
+
+            <div className="hidden h-10 w-24 animate-pulse rounded-lg bg-gray-200 sm:block" />
+          </div>
+
+          {/* Form Skeleton */}
+          <div className="rounded-2xl border border-gray-200 bg-white shadow-sm">
+            <div className="border-b border-gray-200 p-6">
+              <div className="h-5 w-40 animate-pulse rounded bg-gray-200" />
+              <div className="mt-2 h-4 w-64 animate-pulse rounded bg-gray-200" />
+            </div>
+
+            <div className="space-y-6 p-6">
+              <div>
+                <div className="h-4 w-32 animate-pulse rounded bg-gray-200" />
+                <div className="mt-2 h-11 w-full animate-pulse rounded-lg bg-gray-200" />
+              </div>
+
+              <div>
+                <div className="h-4 w-24 animate-pulse rounded bg-gray-200" />
+                <div className="mt-2 h-32 w-full animate-pulse rounded-lg bg-gray-200" />
+              </div>
+
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                <div className="h-16 animate-pulse rounded-lg bg-gray-200" />
+                <div className="h-16 animate-pulse rounded-lg bg-gray-200" />
+              </div>
+
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+                <div className="h-16 animate-pulse rounded-lg bg-gray-200" />
+                <div className="h-16 animate-pulse rounded-lg bg-gray-200" />
+                <div className="h-16 animate-pulse rounded-lg bg-gray-200" />
+              </div>
+            </div>
           </div>
         </div>
       </main>
@@ -179,227 +194,345 @@ export default function AddProductPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-100 p-6">
-      <div className="mx-auto max-w-4xl">
+    <main className="min-h-screen bg-gray-100 p-4 sm:p-6">
+      <div className="mx-auto max-w-5xl">
 
         {/* Header */}
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
+            <div className="flex items-center gap-2 text-sm text-gray-500">
+              <button
+                type="button"
+                onClick={() => router.push("/")}
+                className="transition hover:text-gray-900"
+              >
+                Products
+              </button>
+
+              <span>›</span>
+
+              <span className="text-gray-700">
+                Add Product
+              </span>
+            </div>
+
+            <h1 className="mt-2 text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
               Add Product
             </h1>
 
-            <p className="mt-1 text-gray-600">
-              Create a new product.
+            <p className="mt-1 text-sm text-gray-500">
+              Add a new product to your catalog.
             </p>
           </div>
 
           <button
             type="button"
             onClick={() => router.push("/")}
-            className="rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 sm:w-auto"
           >
             ← Back
           </button>
         </div>
 
         {/* Form Card */}
-        <div className="rounded-xl bg-white p-6 shadow-sm">
+        <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+
+          {/* Form Header */}
+          <div className="border-b border-gray-200 px-5 py-5 sm:px-6">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 text-lg">
+                +
+              </div>
+
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900">
+                  Product Information
+                </h2>
+
+                <p className="mt-1 text-sm text-gray-500">
+                  Enter the basic details for your new product.
+                </p>
+              </div>
+            </div>
+          </div>
 
           <form
             onSubmit={handleSubmit}
-            className="space-y-6"
+            className="space-y-7 p-5 sm:p-6"
           >
 
-            {/* Product Title */}
-            <div>
-              <label
-                htmlFor="title"
-                className="mb-2 block text-sm font-medium text-gray-700"
-              >
-                Product Title *
-              </label>
+            {/* Basic Information */}
+            <section>
+              <div className="mb-5">
+                <h3 className="text-base font-semibold text-gray-900">
+                  Basic Information
+                </h3>
 
-              <input
-                id="title"
-                name="title"
-                type="text"
-                value={formData.title}
-                onChange={handleChange}
-                placeholder="Enter product title"
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
-              />
-            </div>
+                <p className="mt-1 text-sm text-gray-500">
+                  Provide the product name, description and category.
+                </p>
+              </div>
 
-            {/* Description */}
-            <div>
-              <label
-                htmlFor="description"
-                className="mb-2 block text-sm font-medium text-gray-700"
-              >
-                Description *
-              </label>
+              <div className="space-y-5">
 
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                rows={5}
-                placeholder="Enter product description"
-                className="w-full resize-none rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
-              />
-            </div>
+                {/* Title */}
+                <div>
+                  <label
+                    htmlFor="title"
+                    className="mb-2 block text-sm font-medium text-gray-700"
+                  >
+                    Product Title{" "}
+                    <span className="text-red-500">*</span>
+                  </label>
 
-            {/* Category + Brand */}
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                  <input
+                    id="title"
+                    name="title"
+                    type="text"
+                    value={formData.title}
+                    onChange={handleChange}
+                    placeholder="e.g. Premium Wireless Headphones"
+                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
+                  />
+                </div>
 
-              {/* Category */}
-              <div>
-                <label
-                  htmlFor="category"
-                  className="mb-2 block text-sm font-medium text-gray-700"
-                >
-                  Category *
-                </label>
+                {/* Description */}
+                <div>
+                  <label
+                    htmlFor="description"
+                    className="mb-2 block text-sm font-medium text-gray-700"
+                  >
+                    Description{" "}
+                    <span className="text-red-500">*</span>
+                  </label>
 
-                <select
-                  id="category"
-                  name="category"
-                  value={formData.category}
-                  onChange={handleChange}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm outline-none transition focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
-                >
-                  <option value="">
-                    Select Category
-                  </option>
+                  <textarea
+                    id="description"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    rows={5}
+                    placeholder="Describe the product, its features and key benefits..."
+                    className="w-full resize-none rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
+                  />
 
-                  {categories.map((item) => (
-                    <option
-                      key={item.slug}
-                      value={item.slug}
+                  <p className="mt-2 text-xs text-gray-400">
+                    Write a clear and informative product description.
+                  </p>
+                </div>
+
+                {/* Category + Brand */}
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+
+                  <div>
+                    <label
+                      htmlFor="category"
+                      className="mb-2 block text-sm font-medium text-gray-700"
                     >
-                      {item.name}
-                    </option>
-                  ))}
-                </select>
+                      Category{" "}
+                      <span className="text-red-500">*</span>
+                    </label>
+
+                    <select
+                      id="category"
+                      name="category"
+                      value={formData.category}
+                      onChange={handleChange}
+                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
+                    >
+                      <option value="">
+                        Select Category
+                      </option>
+
+                      {categories.map((item) => (
+                        <option
+                          key={item.slug}
+                          value={item.slug}
+                        >
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="brand"
+                      className="mb-2 block text-sm font-medium text-gray-700"
+                    >
+                      Brand
+                    </label>
+
+                    <input
+                      id="brand"
+                      name="brand"
+                      type="text"
+                      value={formData.brand}
+                      onChange={handleChange}
+                      placeholder="e.g. Apple, Samsung, Nike"
+                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
+                    />
+                  </div>
+
+                </div>
+              </div>
+            </section>
+
+            {/* Pricing & Inventory */}
+            <section className="border-t border-gray-200 pt-7">
+              <div className="mb-5">
+                <h3 className="text-base font-semibold text-gray-900">
+                  Pricing & Inventory
+                </h3>
+
+                <p className="mt-1 text-sm text-gray-500">
+                  Set pricing, discount and available inventory.
+                </p>
               </div>
 
-              {/* Brand */}
-              <div>
-                <label
-                  htmlFor="brand"
-                  className="mb-2 block text-sm font-medium text-gray-700"
-                >
-                  Brand
-                </label>
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
 
-                <input
-                  id="brand"
-                  name="brand"
-                  type="text"
-                  value={formData.brand}
-                  onChange={handleChange}
-                  placeholder="Enter brand name"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
-                />
+                {/* Price */}
+                <div>
+                  <label
+                    htmlFor="price"
+                    className="mb-2 block text-sm font-medium text-gray-700"
+                  >
+                    Price{" "}
+                    <span className="text-red-500">*</span>
+                  </label>
+
+                  <div className="relative">
+                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-400">
+                      $
+                    </span>
+
+                    <input
+                      id="price"
+                      name="price"
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={formData.price}
+                      onChange={handleChange}
+                      placeholder="0.00"
+                      className="w-full rounded-lg border border-gray-300 bg-white py-3 pl-9 pr-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
+                    />
+                  </div>
+                </div>
+
+                {/* Discount */}
+                <div>
+                  <label
+                    htmlFor="discountPercentage"
+                    className="mb-2 block text-sm font-medium text-gray-700"
+                  >
+                    Discount
+                  </label>
+
+                  <div className="relative">
+                    <input
+                      id="discountPercentage"
+                      name="discountPercentage"
+                      type="number"
+                      min="0"
+                      max="100"
+                      step="0.01"
+                      value={formData.discountPercentage}
+                      onChange={handleChange}
+                      placeholder="0"
+                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 pr-10 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
+                    />
+
+                    <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-gray-400">
+                      %
+                    </span>
+                  </div>
+                </div>
+
+                {/* Stock */}
+                <div>
+                  <label
+                    htmlFor="stock"
+                    className="mb-2 block text-sm font-medium text-gray-700"
+                  >
+                    Stock
+                  </label>
+
+                  <div className="relative">
+                    <input
+                      id="stock"
+                      name="stock"
+                      type="number"
+                      min="0"
+                      step="1"
+                      value={formData.stock}
+                      onChange={handleChange}
+                      placeholder="0"
+                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
+                    />
+                  </div>
+
+                  <p className="mt-2 text-xs text-gray-400">
+                    Number of units currently available.
+                  </p>
+                </div>
+
               </div>
+            </section>
 
-            </div>
-
-            {/* Price + Discount + Stock */}
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
-
-              {/* Price */}
-              <div>
-                <label
-                  htmlFor="price"
-                  className="mb-2 block text-sm font-medium text-gray-700"
-                >
-                  Price *
-                </label>
-
-                <input
-                  id="price"
-                  name="price"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value={formData.price}
-                  onChange={handleChange}
-                  placeholder="0.00"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
-                />
-              </div>
-
-              {/* Discount */}
-              <div>
-                <label
-                  htmlFor="discountPercentage"
-                  className="mb-2 block text-sm font-medium text-gray-700"
-                >
-                  Discount (%)
-                </label>
-
-                <input
-                  id="discountPercentage"
-                  name="discountPercentage"
-                  type="number"
-                  min="0"
-                  max="100"
-                  step="0.01"
-                  value={formData.discountPercentage}
-                  onChange={handleChange}
-                  placeholder="0"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
-                />
-              </div>
-
-              {/* Stock */}
-              <div>
-                <label
-                  htmlFor="stock"
-                  className="mb-2 block text-sm font-medium text-gray-700"
-                >
-                  Stock
-                </label>
-
-                <input
-                  id="stock"
-                  name="stock"
-                  type="number"
-                  min="0"
-                  step="1"
-                  value={formData.stock}
-                  onChange={handleChange}
-                  placeholder="0"
-                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm outline-none transition focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
-                />
-              </div>
-
-            </div>
-
-            {/* Error Message */}
+            {/* Messages */}
             {error && (
-              <div className="rounded-lg bg-red-50 p-4 text-sm text-red-600">
-                {error}
+              <div
+                role="alert"
+                className="flex items-start gap-3 rounded-xl border border-red-200 bg-red-50 p-4"
+              >
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-100 text-sm font-bold text-red-600">
+                  !
+                </div>
+
+                <div>
+                  <p className="text-sm font-semibold text-red-800">
+                    Unable to add product
+                  </p>
+
+                  <p className="mt-1 text-sm text-red-600">
+                    {error}
+                  </p>
+                </div>
               </div>
             )}
 
-            {/* Success Message */}
             {success && (
-              <div className="rounded-lg bg-green-50 p-4 text-sm text-green-700">
-                {success}
+              <div
+                role="status"
+                className="flex items-start gap-3 rounded-xl border border-green-200 bg-green-50 p-4"
+              >
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-green-100 text-sm font-bold text-green-600">
+                  ✓
+                </div>
+
+                <div>
+                  <p className="text-sm font-semibold text-green-800">
+                    Product added successfully
+                  </p>
+
+                  <p className="mt-1 text-sm text-green-700">
+                    {success}
+                  </p>
+                </div>
               </div>
             )}
 
-            {/* Buttons */}
-            <div className="flex justify-end gap-3 border-t border-gray-200 pt-6">
+            {/* Actions */}
+            <div className="flex flex-col-reverse gap-3 border-t border-gray-200 pt-6 sm:flex-row sm:justify-end">
 
               <button
                 type="button"
                 onClick={() => router.push("/")}
-                className="rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+                disabled={loading}
+                className="w-full rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
               >
                 Cancel
               </button>
@@ -407,18 +540,28 @@ export default function AddProductPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="rounded-lg bg-gray-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+                className="w-full rounded-lg bg-gray-900 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
               >
-                {loading
-                  ? "Adding Product..."
-                  : "Add Product"}
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                    Adding Product...
+                  </span>
+                ) : (
+                  "Add Product"
+                )}
               </button>
 
             </div>
 
           </form>
-
         </div>
+
+        {/* Footer Hint */}
+        <p className="mt-4 text-center text-xs text-gray-400">
+          Fields marked with <span className="text-red-500">*</span> are required.
+        </p>
+
       </div>
     </main>
   );
